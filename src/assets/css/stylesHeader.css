@@ -1,0 +1,78 @@
+.mini-cart{
+    position: relative;
+
+}
+.mini-cart div{
+    width: 16px;
+    height: 16px;
+    background-color: var(--hospital-green);
+    border-radius: 50%;
+    font-size: var(--sm);
+    font-weight: bold;
+    position: absolute;
+    top: -2px;
+    right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.dropdown-profile {
+
+    color: black;
+    cursor: pointer;
+    height: 50px;
+    line-height: 50px;
+    position: relative;
+    width: 200px;
+    text-align: center;
+    text-decoration: none;
+    z-index: 1;
+    transform: perspective(1000px);
+  }
+  
+  .dropdown-menu-profile {
+    background-color: #fff;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    left: 0;
+    opacity: 0;
+    text-align: center;
+    top: 0;
+    visibility: hidden;
+    z-index: -99999;
+  }
+  
+  .dropdown-menu-profile li:first-child {
+    cursor: default;
+  }
+  
+  .dropdown-menu-profile a {
+    color: #000;
+    display: inline-block;
+    width: 100%;
+    text-decoration: none;
+    -webkit-transition: all 1s;
+    transition: all 1s;
+  }
+  
+  .dropdown-menu-profile a:hover {
+    background: white;
+    color: black;
+  }
+  
+  .dropdown-profile:hover .dropdown-menu-profile {
+    background: white;
+    opacity: 1;
+    visibility: visible;
+    top: 100%;
+    width: 100%;
+    -webkit-transition: all .5s, background, 2s .5s linear;
+    transition: all .5s, background 2s .5s linear;
+  }
+  
+  /*Search Bar*/
+  

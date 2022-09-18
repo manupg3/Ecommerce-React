@@ -1,0 +1,212 @@
+.wrapper-button-sidecart{
+    position: relative;
+    text-align: center;
+
+  }
+  
+  .wrapper-button-sidecart a{
+    display: block;
+    width: 100%;
+    height: 45px;
+    line-height: 40px;
+    font-size: 18px;
+    font-family: sans-serif;
+    text-decoration: none;
+    color: #333;
+    border: 2px solid #333;
+    letter-spacing: 2px;
+    text-align: center;
+    position: relative;
+    transition: all .45s;
+  }
+  
+  .wrapper-button-sidecart a span{
+    position: relative;
+    z-index: 2;
+  }
+  
+ .wrapper-button-sidecart a:after{
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: black;
+    transition: all .45s;
+  }
+  
+  .wrapper-button-sidecart a:hover{
+    color: white;
+  }
+  
+  .wrapper-button-sidecart a:hover:after{
+    width: 100%;
+  }
+  
+  .container-button-body {
+    position:relative;
+  
+}
+.container-button-body a{
+    position: relative;
+    display: inline-block;
+    padding: 15px 30px;
+    border: 2px solid black; 
+    text-decoration: none;
+    letter-spacing: 2px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: black;
+    -webkit-box-reflect: below 0px linear-gradient(transparent, rgba(0, 0, 0, 0.306));
+    transition: 0.5s;
+}
+.container-button-body a:hover {
+    color: white;
+}
+.container-button-body a:nth-child(2)
+{
+    filter: hue-rotate(80deg);
+}
+.container-button-body a:before{
+    content:"";
+    position: absolute;
+    left:-20px;
+    top:27px;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 2px;
+    background:black;
+    box-shadow: 5px -8px 0 black,
+                5px  8px 0 black;
+    transition: width 0.5s, left 0.5s, height 0.5s;
+    box-shadow: 0.5s;
+    transition-delay: 1s,0.5s,0s,0s;
+}
+.container-button-body a:hover::before{
+    width: 50%;
+    height: 100%;
+    left: -2px;
+    box-shadow: 5px 0 0 black,
+                5px 0 0 black;
+    transition-delay: 0s,0s,0.5s,1s;
+
+} 
+.container-button-body a:after{
+    content:"";
+    position: absolute;
+    right:-20px;
+    top:27px;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 2px;
+    background:black;
+    box-shadow: -5px -8px 0 black,
+                -5px  8px 0 black;
+    transition: width 0.5s, left 0.5s, height 0.5s;
+    box-shadow: 0.5s;
+    transition-delay: 1s,0.5s,0s,0s;
+}
+.container-button-body a:hover:after{
+    width: 50%;
+    height: 100%;
+    right: -2px;
+    box-shadow: -5px 0 0 black,
+                -5px 0 0 black;
+    transition-delay: 0s,0s,0.5s,1s;
+
+} 
+.container-button-body a:hover{
+
+    color: white;
+    transition-delay: 0.5s;
+}
+.container-button-body a span{
+    position: relative;
+    z-index: 100;
+}
+
+/*CSS BUTTON PRODUCT PAGE*/
+.container-button-body {
+  position:relative;
+
+}
+.container-button-p-page button{
+  position: relative;
+  display: inline-block;
+  padding: 15px 30px;
+  border: 2px solid black; 
+  text-decoration: none;
+  letter-spacing: 2px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: black;
+  -webkit-box-reflect: below 0px linear-gradient(transparent, rgba(0, 0, 0, 0.306));
+  transition: 0.5s;
+}
+.container-button-p-page button:hover {
+  color: white;
+}
+.container-button-p-page button:nth-child(2)
+{
+  filter: hue-rotate(80deg);
+}
+.container-button-p-page button:before{
+  content:"";
+  position: absolute;
+  left:-20px;
+  top:27px;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 2px;
+  background:black;
+  box-shadow: 5px -8px 0 black,
+              5px  8px 0 black;
+  transition: width 0.5s, left 0.5s, height 0.5s;
+  box-shadow: 0.5s;
+  transition-delay: 1s,0.5s,0s,0s;
+}
+.container-button-p-page button:hover::before{
+  width: 50%;
+  height: 100%;
+  left: -2px;
+  box-shadow: 5px 0 0 black,
+              5px 0 0 black;
+  transition-delay: 0s,0s,0.5s,1s;
+
+} 
+.container-button-p-page button:after{
+  content:"";
+  position: absolute;
+  right:-20px;
+  top:27px;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 2px;
+  background:black;
+  box-shadow: -5px -8px 0 black,
+              -5px  8px 0 black;
+  transition: width 0.5s, left 0.5s, height 0.5s;
+  box-shadow: 0.5s;
+  transition-delay: 1s,0.5s,0s,0s;
+}
+.container-button-p-page button:hover:after{
+  width: 50%;
+  height: 100%;
+  right: -2px;
+  box-shadow: -5px 0 0 black,
+              -5px 0 0 black;
+  transition-delay: 0s,0s,0.5s,1s;
+
+} 
+.container-button-p-page button:hover{
+
+  color: white;
+  transition-delay: 0.5s;
+}
+.container-button-p-page button span{
+  position: relative;
+  z-index: 100;
+}
+
+

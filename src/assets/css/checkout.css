@@ -1,0 +1,12 @@
+.checkout-template{
+    grid-template-columns: 3fr 1fr;
+    grid-gap: 0rem;
+    grid-row-gap: 1.5em;
+    display: grid;
+    margin: 0 0 4em 0;
+}
+
+.information-sidebar{
+    height: max-content ;
+
+}

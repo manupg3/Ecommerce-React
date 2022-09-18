@@ -1,0 +1,28 @@
+.OrderItem {
+	display: grid;
+	grid-template-columns: auto 1fr auto auto;
+	gap: 16px;
+
+	align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.OrderItem figure {
+	margin: 0;
+}
+.remove-item:hover{
+    cursor: pointer;
+}
+.OrderItem figure img {
+	width: 70px;
+	height: 70px;
+	border-radius: 0px;
+	object-fit: contain;
+}
+.OrderItem p:nth-child(2) {
+	color: var(--very-light-pink);
+}
+.OrderItem p:nth-child(3) {
+	font-size: var(--md);
+	font-weight: bold;
+}
