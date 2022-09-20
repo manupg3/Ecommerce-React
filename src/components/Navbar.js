@@ -18,6 +18,7 @@ import { signUpWithEmail, updateProfile, signInWithEmail, logOut } from '../serv
 import useProfile from '../hooks/useGetUserProfile';
 import SearchBar from './SearchBar';
 import Modal from 'react-bootstrap/Modal';
+import { LinkContainer } from 'react-router-bootstrap'
 
 
 
@@ -27,6 +28,7 @@ function NavScrollExample() {
 
     const form = useRef()
     const refLogin = useRef()
+    const [showDrop, setDropdown] = useState(false)
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShowModal = () => setShow(true);
@@ -60,7 +62,15 @@ function NavScrollExample() {
       //    setSideCartCount(state.cart.length)
       //  }
     }, [state])
-    
+
+    const showDropdown = (e)=>{
+      console.log("ENTRO A SHOW DROPDOWN")
+      setDropdown(!showDrop);
+      console.log(showDrop)
+  }
+  const hideDropdown = e => {
+      setDropdown(false);
+  }
   
     const handleSideCart = (e) => {
       console.log("EVENT", e)
@@ -145,7 +155,7 @@ function NavScrollExample() {
 
   return (
     
-    <div className='fixed w-full z-50 shadow-md'>
+    <div className='fixed top-0 w-full z-50 shadow-md'>
     <Navbar bg="light" expand="lg" >
       <Container fluid>
         <Navbar.Brand href="#">Navbar scroll</Navbar.Brand>
@@ -155,22 +165,33 @@ function NavScrollExample() {
             className="ml-auto mr-auto my-2 my-lg-0"
             style={{ maxHeight: '100px' }}
             navbarScroll
-          >
-            <Nav.Link href="#action1">Home</Nav.Link>
-            <Nav.Link href="#action2">Link</Nav.Link>
-            <NavDropdown title="Link" id="navbarScrollingDropdown">
-              <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action4">
-                Another action
+          >     <LinkContainer to="/" className="block md:px-3">
+                     <Nav.Link>Home</Nav.Link>
+               </LinkContainer>   
+               <LinkContainer to="/shop" className="block md:px-3 ">  
+            <NavDropdown title="Shop" id="navbarScrollingDropdown" className="drop-menu-shop"
+              show={showDrop}
+              onMouseEnter={showDropdown} 
+              onMouseLeave={hideDropdown}
+            >
+              <NavDropdown.Item href="#action3">
+                Categoria 1
               </NavDropdown.Item>
-              <NavDropdown.Divider />
+              <NavDropdown.Item href="#action4">
+                Categoria 2
+              </NavDropdown.Item>
               <NavDropdown.Item href="#action5">
-                Somet
+                Categoria 3
               </NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link href="#" disabled>
-              Link
-            </Nav.Link>
+            </LinkContainer>   
+            <LinkContainer to="/about" className="block md:px-3">  
+                     <Nav.Link >About</Nav.Link>
+                     </LinkContainer>   
+                     
+            <LinkContainer to="/contact" className="block md:px-3">  
+                     <Nav.Link >Contact</Nav.Link>
+                     </LinkContainer>   
           </Nav>
           <ul className="border-t space-y-2  lg:space-y-0 
           lg:space-x-2 lg:pt-0 lg:pl-2 lg:border-t-0 lg:border-l 
@@ -209,10 +230,8 @@ function NavScrollExample() {
                       >
                         <FiShoppingBag style={{ fontSize: "25px" }} />
                       </button>
-                      {sideCartCount > 0 &&
-                        <div className="Header-alert">{sideCartCount}</div>
-                      }
-                      {state.cart.length > 0 && sideCartCount == 0 &&
+                 
+                      {state.cart.length > 0 &&
                     
                         <div className="Header-alert">{state.cart.length}</div>
                       

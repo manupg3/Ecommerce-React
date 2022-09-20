@@ -23,9 +23,12 @@ const OrderItem = ({product}) => {
 			<Link to="/product-page" state={product} onClick={() => toggleSideCart()} >
 			<p className='mb-2 mt-8'>{product.title}</p>
 			</Link>
+			<div className='flex items-start'>
 			<div className='border-2 w-max'>
 			<button className='pt-0 pl-2 pr-2' onClick={()=>handleMinus(product)}>-</button>
 			<button  className='pt-0 pl-2 pr-2' onClick={()=>handlePlus(product)} >+</button>
+			</div>
+			<p className='pt-0 pl-2 pr-2'>x{product.quantity}</p>
 			</div>
 			</div>
 			<p className='mb-0'>${product.price} </p>

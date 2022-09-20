@@ -49,10 +49,14 @@ const closeResult = () =>{
         <img src={product.image} height="20px" width="50px" />        
        </div>
     			</Link>
-
-    ))}   
-    </div>
+    ))}
+      {filteredProducts.length === 0 && 
+     <p className='mb-0'>Products not found</p> 
+      }
+      </div>
      }
+     
+ 
 </div>
     </div>
   )

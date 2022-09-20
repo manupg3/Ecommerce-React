@@ -8,5 +8,10 @@
 
 .information-sidebar{
     height: max-content ;
+}
+.btn-checkout-page:hover{
+
+background:black !important;
+color: white !important;
 
 }

@@ -23,7 +23,7 @@ const handleAddToCart = product =>{
 
   return (
     <Page>
-    <div className='grid lg:grid-cols-2 bg-white gap-4 pt-[100px] pb-24 md:grid-cols-1'>
+    <div className='grid lg:grid-cols-2 bg-white gap-4 pt-8 pb-24 md:grid-cols-1'>
     <div>
     <img src={product.image} alt="" className="lg:pl-8 lg:pr-8"/>
     <div className="flex gap-4 justify-center">

@@ -2,6 +2,16 @@
     position: relative;
 
 }
+.dropdown-menu
+{
+  margin-top: -5px !important;  
+  border:none !important;
+  border-radius: 0px !important;
+  box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
+
+  -webkit-transition: all .5s, background, 2s .5s linear;
+  transition: all .5s, background 2s .5s linear;
+}
 .mini-cart div{
     width: 16px;
     height: 16px;

@@ -11,6 +11,8 @@ import ModalLoginRegister from './ModalLoginRegister';
 import { signUpWithEmail, updateProfile, signInWithEmail, logOut } from '../services/auth'
 import useProfile from '../hooks/useGetUserProfile';
 import SearchBar from './SearchBar';
+import { LinkContainer } from 'react-router-bootstrap'
+
 
 
 function Header() {
@@ -147,9 +149,9 @@ function Header() {
                 <div className="block w-full lg:items-center lg:flex">
                   <ul className="space-y-6 pb-6 tracking-wide font-medium text-gray-600 lg:pb-0 lg:pr-6 lg:items-center lg:flex lg:space-y-0">
                     <li>
-                      <Link to="/" className="block md:px-3">
+                      <LinkContainer to="/" className="block md:px-3">
                         <span>Home</span>
-                      </Link>
+                      </LinkContainer>
                     </li>
                     <li>
                       <Link to="/shop" className="block md:px-3">

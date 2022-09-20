@@ -10,13 +10,12 @@ import { ThreeDots } from  'react-loader-spinner'
 
 
 function CheckoutPage() {
-const [total, setTotal] = useState(0)
-const [applied, setApplied] = useState()
 const [badCoupon, setBadCoupon] = useState(false)
 const [loader , setLoader] = useState(false) 
 const [actualCheckboxState, changeCheckboxState] = useState(false);
 const [payment, setPaymentMethod] = useState("")
-const {state,addToBuyer,toggleSideCart,insertOrder} = useContext(AppContext)
+const {state,addToBuyer,toggleSideCart,updateTotalDiscount,insertOrder,
+  total,applied,applyCouponDiscount} = useContext(AppContext)
 let {cart} = state
 const form = useRef(null)
 const refCoupon = useRef(null)
@@ -25,12 +24,12 @@ const refCoupon = useRef(null)
  const navigate = useNavigate()
 
  useEffect(() => {
-  
+  console.log("ENTRO ACA")
   totalPayment()
   if(localStorage.getItem("CouponApplied")){
-    setApplied(true)
+    applyCouponDiscount(true)
     console.log("TOTAl",total)
-    setTotal(localStorage.getItem("Total"))
+    //setTotal(localStorage.getItem("Total"))
   }
 
   else{
@@ -44,22 +43,26 @@ useEffect(() => {
   
 totalPayment()
 
+
 }, [total])
 
 
 
 const totalPayment = (discount) => {
-
+  console.log("ENTRO ACA")
   let sumTotal = 0
 
-  const reducer = (accumulator, currentValue) => accumulator + currentValue.price
+  const reducer = (accumulator, currentValue) => accumulator + currentValue.price * currentValue.quantity
   sumTotal = state.cart.reduce(reducer, 0)
-  setTotal(sumTotal)
+
   if(discount > 0 ){
-    
+
+    console.log("APLICAR DESUENTO")
     let applyDiscount = (sumTotal*30)/100
     sumTotal = sumTotal - applyDiscount
-    setTotal(sumTotal)
+    console.log("SUMTOTAL CON DESCUENTO",sumTotal)
+    updateTotalDiscount(sumTotal)
+    console.log("TOTAL CON DESCUENTO",total)
     localStorage.setItem("Total", sumTotal)
 
   }
@@ -67,16 +70,15 @@ const totalPayment = (discount) => {
 }
 
 const applyCoupon = (e) => {
-
   e.preventDefault()
   const formData = new FormData(refCoupon.current)
-  if(formData.get('coupon') == "DISCOUNT-30%"){  
+  if(formData.get('coupon') == "DISCOUNT-30%"){
   discount = 30
   totalPayment(discount)
   setBadCoupon(false)
-  setApplied(true) 
+  applyCouponDiscount(true) 
   localStorage.setItem("CouponApplied", true) 
- }
+}
   else{
    setBadCoupon(true)
   }
@@ -111,8 +113,8 @@ const handleSubmit = () =>{
     const result = insertOrder(order)
     result.then((value)=>{
      if(value.status === 201){
-      setApplied("")
-      setTotal(0)
+      applyCouponDiscount(false)
+      //setTotal(0)
       setPaymentMethod("")
       localStorage.setItem("CouponApplied", "")
       localStorage.setItem("Total", 0)
@@ -131,7 +133,7 @@ if(loader == false){
 return (
   <Page>
 
-<div className='flex ml-12 mr-8 shadow-md w-[35%] mt-24 pb-2 pt-4 pr-4'>
+<div className='flex ml-12 mr-8 shadow-md w-max mt-24 pb-2 pt-4 pr-4'>
 {!applied &&
 <div className=''>
     <a class="inline-block px-6 py-2.5 bg-whit text-grey-500 
@@ -153,15 +155,15 @@ return (
         text-gray-700
         bg-white bg-clip-padding
         border-t-0 border-solid border-gray-300
-        border-b-[1px]
-        focus:border-b-[2px]
+        border-b
+        focus:border-b-2
         transition
         ease-in-out
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" 
         placeholder="Enter Coupon Code" />
 		<button type='submit'
-    className="pt-[8px] pb-[8px] pl-[12px] pr-[12px] bg-white text-black 
-    font-bold mt-4 mb-2 border-2 border-black hover:bg-black hover:text-white">Apply Coupon</button>
+    className="btn-checkout-page pt-2 pb-2 pl-4 pr-4 bg-white text-black 
+    font-bold mt-4 mb-2 border-2 border-black">Apply Coupon</button>
 	</div>
   </form>
   </div>
@@ -169,7 +171,7 @@ return (
 <p class="flex gap-2 text-center inline-block px-6 py-2.5 bg-whit text-green-400 
      text-[16px] font-semibold leading-tight rounded  
      focus:outline-none focus:ring-0 transition
-      duration-150 ease-in-out pl-14 ">
+      duration-150 ease-in-out pl-14 mb-0">
         Coupon applied successfully   <AiFillCheckCircle className=' text-green-400 text-lg' />
   </p>
   
@@ -185,7 +187,7 @@ return (
     </div>  
 
     <div className='pt-2 pb-12 checkout-template'>
-      <div class="block p-12 pb-8 rounded-lg shadow-lg bg-white w-[90%] ml-12">
+      <div class="block p-12 pb-8 rounded-lg shadow-lg bg-white w-11/12 ml-12">
       <h1 className='text-center mb-6 text-2xl uppercase font-bold'>Billing Information</h1>
   <form ref={form}>
     <div class="form-group mb-0">
@@ -201,8 +203,8 @@ return (
         text-gray-700
         bg-white bg-clip-padding
         border-t-0 border-solid border-gray-300
-        border-b-[1px]
-        focus:border-b-[2px]
+        border-b
+        focus:border-b-2
         transition
         ease-in-out
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"/>
@@ -210,13 +212,13 @@ return (
         w-full
         px-3
         py-1.5
-        focus:border-b-[2px]
+        focus:border-b
         text-base
         font-normal
         text-gray-700
         bg-white bg-clip-padding
         border-t-0 border-solid border-gray-300
-        border-b-[1px]
+        border-b
         transition
         ease-in-out
         mb-6
@@ -232,9 +234,9 @@ return (
         text-gray-700
         bg-white bg-clip-padding
         border-t-0 border-solid border-gray-300
-        border-b-[1px]
+        border-b
         transition
-        focus:border-b-[2px]
+        focus:border-b-2
         ease-in-out
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
          <div className='flex'>
@@ -248,9 +250,9 @@ return (
         text-gray-700
         bg-white bg-clip-padding
         border-t-0 border-solid border-gray-300
-        border-b-[1px]
+        border-b
         transition
-        focus:border-b-[2px]
+        focus:border-b-2
         ease-in-out
         mb-6
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
@@ -264,9 +266,9 @@ return (
         text-gray-700
         bg-white bg-clip-padding
         border-t-0 border-solid border-gray-300
-        border-b-[1px]
+        border-b
         transition
-        focus:border-b-[2px]
+        focus:border-b-2
         ease-in-out
         mb-6
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
@@ -281,10 +283,10 @@ return (
         text-gray-700
         bg-white bg-clip-padding
         border-t-0 border-solid border-gray-300
-        border-b-[1px]
+        border-b
         transition
         ease-in-out
-        focus:border-b-[2px]
+        focus:border-b-2
         mb-6
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
           
@@ -297,17 +299,17 @@ return (
         text-gray-700
         bg-white bg-clip-padding
         border-t-0 border-solid border-gray-300
-        border-b-[1px]
+        border-b
         transition
         ease-in-out
         mb-6
-        focus:border-b-[2px]
+        focus:border-b-2
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"/>
           </div> <div className='flex'>
             <input type="text" placeholder="Codigo postal" name="cp"className="block
         w-full
         px-3
-        focus:border-b-[2px]
+        focus:border-b-2
         mr-4
         py-1.5
         text-base
@@ -315,7 +317,7 @@ return (
         text-gray-700
         bg-white bg-clip-padding
         border-t-0 border-solid border-gray-300
-        border-b-[1px]
+        border-b
         transition
         ease-in-out
         mb-6
@@ -328,10 +330,10 @@ return (
         text-base
         font-normal
         text-gray-700
-        focus:border-b-[2px]
+        focus:border-b-2
         bg-white bg-clip-padding
         border-t-0 border-solid border-gray-300
-        border-b-[1px]
+        border-b
         transition
         ease-in-out
         mb-6
@@ -340,13 +342,14 @@ return (
 </div>
   </form>
 </div>
-<div className="information-sidebar p-4 shadow-lg mr-[20px] ">
-        <h3 className='mb-6 text-[23px] '>Your Order</h3>
+<div className="information-sidebar p-4 shadow-lg mr-4 ">
+        <h3 className='mb-6 text-lg '>Your Order</h3>
         {cart.map((item) => (
-          <div className="Information-item  " key={item.title}>
-            <div className="Information-element flex text-center mb-[14px] ">
+          <div className="Information-item " key={item.title}>
+            <div className="Information-element flex text-center mb-4 ">
             <img src={item.image} height="15px" width="50px" 
-            style={{marginRight:"10px"}} alt='' /><h4>{item.title}</h4>
+            style={{marginRight:"10px"}} alt='' /><h4 className='mb-0 text-base'>{item.title}</h4>
+            <p className='ml-1 mb-0'>x{item.quantity}</p>
               <div className='w-full'>
               <span className='float-right'>
                 $
@@ -358,7 +361,7 @@ return (
         ))}
        <hr style={{width:"100%", border:"0.5px solid #7a7a7a",marginTop:"19px",marginBottom:"12px"}} />
        <div>
-       <h3>Payment Method</h3>
+       <h3 className='text-lg'>Payment Method</h3>
        <div class="flex justify-start py-2">
   <div>
   <div onChange={onChangeValue}> 
@@ -390,15 +393,15 @@ return (
        <hr style={{width:"100%", border:"0.5px solid #7a7a7a",marginTop:"8px",marginBottom:"12px"}} />
        
        <div className='flex mt-4'>
-       <h3>Total:</h3>
+       <h3 className='text-lg'>Total:</h3>
        <div className='w-full'>  
        <span className='float-right'>
                 ${total}</span>
               </div>
       </div>
       <div className='text-center'>
-      <button className='pt-[10px] pb-[10px] pl-[15px] pr-[15px] bg-white text-black 
-        font-bold mt-4 mb-2 border-2 border-black hover:bg-black hover:text-white' onClick={()=> handleSubmit()}>
+      <button className='pt-2 pb-2 pl-4 pr-4 bg-white text-black 
+        font-bold mt-4 mb-2 border-2 border-black btn-checkout-page' onClick={()=> handleSubmit()}>
         Proced to Payment
       </button>
       </div>
