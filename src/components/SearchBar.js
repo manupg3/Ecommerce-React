@@ -44,7 +44,7 @@ const closeResult = () =>{
     <div className='result-search'>
     {filteredProducts.map(product =>(
        <Link to="/product-page" state={product}  onClick={()=> closeResult()} >
-        <div className='flex justify-between'>
+        <div className='flex justify-between items-center'>
         <h1>{product.title}</h1>
         <img src={product.image} height="20px" width="50px" />        
        </div>

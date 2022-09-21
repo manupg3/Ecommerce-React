@@ -4,6 +4,11 @@ a{
 body, button, input {
 
 }
+.result-search h1{
+  font-size: 14px !important;
+  color: black !important;
+  margin-bottom: 0px !important;
+}
 body, input {
   color: #171717;
 }

@@ -6,6 +6,8 @@ import Page from '../components/PageScrolling'
 import { signUpWithEmail, updateProfile, signInWithEmail, logOut } from '../services/auth'
 import {AiFillCheckCircle} from 'react-icons/ai'
 import { ThreeDots } from  'react-loader-spinner'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 
 
@@ -27,16 +29,21 @@ const refCoupon = useRef(null)
   console.log("ENTRO ACA")
   totalPayment()
   if(localStorage.getItem("CouponApplied")){
+    const applied = localStorage.getItem("CouponApplied")
+   if(applied === true){
     applyCouponDiscount(true)
-    console.log("TOTAl",total)
     //setTotal(localStorage.getItem("Total"))
+   }
+   else{
+    applyCouponDiscount(false)
+   }
   }
-
   else{
 
   }
 
 }, [])
+
 
 
 useEffect(() => {
@@ -68,11 +75,32 @@ const totalPayment = (discount) => {
   }
 
 }
-
+const MySwal = withReactContent(Swal)
+const alertBadCoupon = ()=> {
+ const Toast = MySwal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
+  Toast.fire({
+    icon: 'error',
+    title: 'invalid coupon'
+  })
+}
 const applyCoupon = (e) => {
   e.preventDefault()
   const formData = new FormData(refCoupon.current)
-  if(formData.get('coupon') == "DISCOUNT-30%"){
+  if(state.cart.length === 0)
+  {
+     
+  }
+  else if(formData.get('coupon') == "DISCOUNT-30%"){
   discount = 30
   totalPayment(discount)
   setBadCoupon(false)
@@ -80,7 +108,8 @@ const applyCoupon = (e) => {
   localStorage.setItem("CouponApplied", true) 
 }
   else{
-   setBadCoupon(true)
+    alertBadCoupon()
+    setBadCoupon(true)
   }
 }
 const onChangeValue = (e) => {
@@ -116,7 +145,7 @@ const handleSubmit = () =>{
       applyCouponDiscount(false)
       //setTotal(0)
       setPaymentMethod("")
-      localStorage.setItem("CouponApplied", "")
+      localStorage.setItem("CouponApplied", false)
       localStorage.setItem("Total", 0)
       cart = []
       navigate('/checkout-success')
@@ -125,7 +154,7 @@ const handleSubmit = () =>{
       navigate('/checkout')
      }    
     })
-
+ 
   }, 2000);
 
 }
@@ -133,7 +162,7 @@ if(loader == false){
 return (
   <Page>
 
-<div className='flex ml-12 mr-8 shadow-md w-max mt-24 pb-2 pt-4 pr-4'>
+<div className='flex ml-12 mr-8 mb-2 shadow-md w-max mt-4 pb-2 pt-4 pr-4'>
 {!applied &&
 <div className=''>
     <a class="inline-block px-6 py-2.5 bg-whit text-grey-500 
@@ -176,11 +205,7 @@ return (
   </p>
   
  }
-    {badCoupon && 
-<p className='absolute left-[350px] bg-red-600 text-white font-bold text-[12px] 
-   px-[10px] py-[5px] rounded-[3px] 
-' >Codigo Incorrecto</p>
- }
+  
 	<div>
   </div>
 

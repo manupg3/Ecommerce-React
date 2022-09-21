@@ -174,13 +174,13 @@ function NavScrollExample() {
               onMouseEnter={showDropdown} 
               onMouseLeave={hideDropdown}
             >
-              <NavDropdown.Item href="#action3">
+              <NavDropdown.Item style={{paddingTop:"10px", paddingBottom:"10px"}} href="#action3">
                 Categoria 1
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action4">
+              <NavDropdown.Item  style={{paddingTop:"10px", paddingBottom:"10px"}} href="#action4">
                 Categoria 2
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action5">
+              <NavDropdown.Item  style={{paddingTop:"10px", paddingBottom:"10px"}} href="#action5">
                 Categoria 3
               </NavDropdown.Item>
             </NavDropdown>

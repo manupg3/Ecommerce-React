@@ -35,13 +35,27 @@ const useInitialState = () => {
       console.log("STATE CART",state)
 
     const addToCart = (payload) => {
-
-        setState({
-            ...state,
-            cart: [...state.cart, payload]
-        })
-        calculateTotal(payload)
-    }
+       if(state.cart.length > 0){  
+         const equal = state.cart.filter(item => item.id === payload.id)
+         console.log("EQUAL",equal)
+           if(equal.length > 0){
+             Plus(payload)
+           }
+           else{
+            setState({
+                ...state,
+                cart: [...state.cart, payload]
+                })
+           }
+        }
+        else{
+    setState({
+        ...state,
+        cart: [...state.cart, payload]
+        })}
+    calculateTotal(payload)
+       
+}
 
     const getProductsFromLocalStorage = ( ) =>{
                if(localStorage.getItem("ProductsInCart")){
@@ -54,6 +68,11 @@ const useInitialState = () => {
 
     const removeFromSideCart = (payload) =>{
         setApplied(false)
+        state.cart.map(item =>{
+            if(item.id === payload.id){
+                item.quantity = 1
+            }
+        })
         localStorage.setItem("CouponApplied", false) 
         setState({
             ...state,
@@ -127,7 +146,6 @@ const useInitialState = () => {
 
     }
     const Plus = (product) =>{
-
           state.cart.map(item=>{
             if(item.id == product.id){
                 item.quantity = item.quantity+1
@@ -135,7 +153,6 @@ const useInitialState = () => {
             }
           })
           localStorage.setItem("ProductsInCart",JSON.stringify(state.cart))    
-
     }
 
     return {
