@@ -24,7 +24,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 function NavScrollExample() {
-  const profile = useProfile()
+  const profiles = useProfile()
   const navigate = useNavigate()
     const form = useRef()
     const refLogin = useRef()
@@ -33,9 +33,10 @@ function NavScrollExample() {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShowModal = () => setShow(true);
-    const [LoggedUser, setLoggedUser] = useState(null)
+   // const [LoggedUser, setLoggedUser] = useState(null)
     const [toggleSideCartState, setToggleSideCart] = useState(false)
-    const { state, toggleSideCart, toggle, getProductsFromLocalStorage } = useContext(AppContext)
+    const { state, toggleSideCart, toggle, getProductsFromLocalStorage,SignIn,
+      profile ,LoggedUser } = useContext(AppContext)
     const { cart } = state
     let productsFromLocal
     const [sideCartCount, setSideCartCount] = useState(0)
@@ -54,7 +55,7 @@ function NavScrollExample() {
         setSideCartCount(productsFromLocal.length)
        }}
   
-    }, [profileUser])
+    }, [])
   
     useEffect(() => {
        
@@ -84,7 +85,7 @@ function NavScrollExample() {
     }
     if (userEmail.email != undefined) {
       userEmail.then(email => {
-        setLoggedUser(email.userEmail)
+      //  setLoggedUser(email.userEmail)
         localStorage.setItem("LoggedUser", email.userEmail)
       })
     }
@@ -93,17 +94,21 @@ function NavScrollExample() {
       if (localStorage.getItem("LoggedUser")) {
         const user = localStorage.getItem("LoggedUser")
         if (user == "null") {
-          setLoggedUser(null)
+       //   setLoggedUser(null)
         }
         else {
-          setLoggedUser(localStorage.getItem("LoggedUser"))
+         // setLoggedUser(localStorage.getItem("LoggedUser"))
         }
       }
       else {
-  
+         
       }
     }
     useEffect(() => {
+      console.log("ENTRO A USEEFFECT LOGGEDUSER",profile)
+      if(Profile == "Administratotr"){
+        console.log("ES ADMINISTRATOR")
+      } 
       isLggedIn()
     }, [LoggedUser])
   
@@ -125,8 +130,8 @@ function NavScrollExample() {
           id: user.data.user.id,
           full_name: data.name
         }
-        setLoggedUser(user.email)
-        console.log("USER STATE", LoggedUser)
+        //setLoggedUser(user.email)
+       // console.log("USER STATE", LoggedUser)
   
         await updateProfile(data2)
       }
@@ -140,10 +145,11 @@ function NavScrollExample() {
         email: formData.get('emailSignIn'),
         password: formData.get('passwordSignIn')
       }
-      const result = await signInWithEmail(data)
-      console.log("USER RESULT", result.data)
-      setLoggedUser(result.data.user.email)
-      localStorage.setItem("LoggedUser", result.data.user.email)
+      const result = await SignIn(data)
+      // const result = await signInWithEmail(data)
+      // console.log("USER RESULT", result.data)
+      // setLoggedUser(result.data.user.email)
+      // localStorage.setItem("LoggedUser", result.data.user.email)
     }
     const handleLogOut = async () => {
   

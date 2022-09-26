@@ -1,10 +1,11 @@
 import { prevButtonDisabled } from 'nuka-carousel/lib/default-controls';
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Profiler } from 'react'
 import SideCart from '../components/SideCart';
 import initialState from '../InitialState';
 import { supabaseClient } from '../database/supabase/client'
 import { isAccordionItemSelected } from 'react-bootstrap/esm/AccordionContext';
-
+import { signUpWithEmail, updateProfile, signInWithEmail, logOut } from '../services/auth'
+import { useNavigate } from 'react-router-dom';
 
 
 const useInitialState = () => {
@@ -14,7 +15,9 @@ const useInitialState = () => {
     const [productsFlocal , setProducts] = useState()
     const [total, setTotal] = useState(0)
     const [applied, setApplied] = useState()
-
+    const [LoggedUser, setLoggedUser] = useState(null)
+    const [profile, setProfile] = useState(null)
+  
     let productsFromLocal
 
     useEffect(() => {
@@ -35,7 +38,32 @@ const useInitialState = () => {
 
       console.log("STATE CART",state)
 
-    const addToCart = (payload) => {
+      const SignIn = async (data) => {
+        
+        const result = await signInWithEmail(data)
+        console.log("USER RESULT", result.data)
+        setLoggedUser(result.data.user.email)
+        localStorage.setItem("LoggedUser", result.data.user.email)
+           let userProfile = await supabaseClient
+            .from('profiles')
+            .select('profile')
+            .eq("id", result.data.user.id);
+            if(userProfile.data[0].profile == "Administrator"){
+
+                    setLoggedUser(result.data.user.email)
+                    setProfile(userProfile.data[0].profile)
+                    console.log("PROFILE EN USINITIAL STATE",profile)
+                    return userProfile.data[0].profile
+                  
+             }
+             else{
+                console.log("ES CLIENTE")
+                setProfile(userProfile.data[0].profile)
+                return userProfile.data[0].profile
+             }         
+      }
+
+     const addToCart = (payload) => {
        if(state.cart.length > 0){  
          const equal = state.cart.filter(item => item.id === payload.id)
          console.log("EQUAL",equal)
@@ -171,6 +199,10 @@ const useInitialState = () => {
         total,
         updateTotalDiscount,
         applyCouponDiscount,
+        SignIn,
+        LoggedUser,
+        profile
+
     }
 }
 export default useInitialState

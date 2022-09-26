@@ -1,16 +1,19 @@
-import React,{useRef,useState,useEffect} from 'react'
+import React,{useRef,useState,useContext,useEffect} from 'react'
 import Page from '../../components/PageScrolling'
-import { signUpWithEmail, updateProfile, signInWithEmail, logOut } from '../../services/auth'
+import { signUpWithEmail, updateProfile, signInWithEmail, logOut  } from '../../services/auth'
 import useProfile from '../../hooks/useGetUserProfile';
 import { useNavigate } from 'react-router-dom';
 import { supabaseClient } from "../../database/supabase/client"
+import AppContext from '../../context/AppContext';
 
 const LoginAdmin = () => {
   const form = useRef()
   const refLogin = useRef()
-  const [LoggedUser, setLoggedUser] = useState(null)
+  //const [LoggedUser, setLoggedUser] = useState(null)
   const profile = useProfile()
   const navigate = useNavigate()
+  const { state, toggleSideCart, toggle, getProductsFromLocalStorage,SignIn,LoggedUser } = useContext(AppContext)
+
 
   const handleSignIn = async (e) => {
     e.preventDefault()
@@ -19,15 +22,20 @@ const LoginAdmin = () => {
       email: formData.get('emailSignIn'),
       password: formData.get('passwordSignIn')
     }
-    const result = await signInWithEmail(data)
-    let userProfile = await supabaseClient
-    .from('profiles')
-    .select('profile')
-    .eq("id", result.data.user.id);
-     if(userProfile.data[0].profile == "Administrator"){
+    const result = await SignIn(data)
+    console.log("IS SIGN IN",result)
+       if(result == "Administrator"){
+        navigate("/admin-home")
+       }
+    // const result = await signInWithEmail(data)
+    // let userProfile = await supabaseClient
+    // .from('profiles')
+    // .select('profile')
+    // .eq("id", result.data.user.id);
+    //  if(userProfile.data[0].profile == "Administrator"){
      
-           navigate("/admin-home")
-     }      
+     
+    //  }      
 
     //setLoggedUser(result.data.user.email)
     //localStorage.setItem("LoggedUser", result.data.user.email)
