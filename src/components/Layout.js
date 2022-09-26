@@ -6,6 +6,7 @@ import AppContext from '../context/AppContext'
 import  Navbar  from '../components/Navbar'
 
 const Layout = ({ children }) => {
+  
   return (
     <div className="Main">
       <Navbar />

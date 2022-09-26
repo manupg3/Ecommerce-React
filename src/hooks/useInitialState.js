@@ -8,6 +8,7 @@ import { isAccordionItemSelected } from 'react-bootstrap/esm/AccordionContext';
 
 
 const useInitialState = () => {
+    
     const [state, setState] = useState(initialState)
     const [toggle, setToggle] = useState(false)
     const [productsFlocal , setProducts] = useState()
@@ -57,6 +58,7 @@ const useInitialState = () => {
        
 }
 
+
     const getProductsFromLocalStorage = ( ) =>{
                if(localStorage.getItem("ProductsInCart")){
 
@@ -99,9 +101,7 @@ const useInitialState = () => {
 
        } catch (error) {
           console.log("ERROR",error)
-       }    
-  
-             
+       }               
     }
 
     const addToBuyer = (payload) =>{

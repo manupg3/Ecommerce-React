@@ -13,11 +13,16 @@ import ContactPage from '../pages/contactPage'
 import CheckoutPage from '../containers/Checkout'
 import { supabaseClient } from '../database/supabase/client'
 import ProductPage from '../pages/ProductPage'
+import adminHomePage from '../admin/adminPages/adminHomePage'
+import AdminHomePage from '../admin/adminPages/adminHomePage'
+import LoginAdmin from '../admin/adminPages/loginAdmin'
+import ProductsPage  from '../admin/adminPages/productsPage'
+import { OrdersPage } from '../admin/adminPages/ordersPage'
+import { Analitycs } from '../admin/adminPages/analitycs'
+import { TasksPage } from '../admin/adminPages/tasksPage'
 
 function AnimatedRoutes() {
     const location = useLocation();
-  
-
 useEffect(() => {
   
       supabaseClient.auth.onAuthStateChange((event, session)=>{
@@ -45,7 +50,14 @@ useEffect(() => {
         <Route exact path='/about' element={<AboutPage />} />
         <Route exact path='/contact' element={<ContactPage />} />
         <Route exact path='/product-page' element={<ProductPage />} /> 
-
+        <Route exact path='/admin-home' element={<AdminHomePage />} /> 
+        <Route exact path='/admin' element={<LoginAdmin />} /> 
+        <Route exact path='/orders-page' element={<OrdersPage />} /> 
+        <Route exact path='/analitycs-page' element={<Analitycs />} /> 
+        <Route exact path='/admin-products-page' element={<ProductsPage />} /> 
+        <Route exact path='/tasks-page' element={<TasksPage />} /> 
+        
+        
         <Route element={<Page404 />} />
     </Routes>
 

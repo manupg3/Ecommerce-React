@@ -1,8 +1,10 @@
 import { supabaseClient } from "../database/supabase/client"
+import { useNavigate } from "react-router-dom"
 
 export const signUpWithEmail = async (data) => {
   let result
   try {
+    
     result = await supabaseClient.auth.signUp(data)
     return result
   } 
@@ -32,24 +34,23 @@ try {
 }
 
 export const getUserProfile =  async() =>{
+
     try{ 
 
      const user = await supabaseClient.auth.getUser()
      if(user){ 
+      console.log("USER EN AUTH",user)
          if(user.data.user == null){
             return "ES NULL"
         }
         else{     
-            const{id,app_metadata,user_netadata}=user
-            return {userEmail:user.data.user.email}
+          let userProfile = await supabaseClient
+          .from('profiles')
+          .select('profile')
+          .eq("id", user.data.user.id);
+                    
+            return {userEmail:user.data.user.email,userProfile:userProfile.data[0].profile}
         }
-        
-    //     const{data,error,status}=await supabaseClient
-    //       .from('profiles')
-    //       .select('id,username,updated_at')
-    //       .eq('id',id)
-    //       .single()
-    //       return{username:data.username}
          
       }
         

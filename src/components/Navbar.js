@@ -19,16 +19,17 @@ import useProfile from '../hooks/useGetUserProfile';
 import SearchBar from './SearchBar';
 import Modal from 'react-bootstrap/Modal';
 import { LinkContainer } from 'react-router-bootstrap'
-
-
+import { useNavigate } from 'react-router-dom';
 
 
 
 function NavScrollExample() {
-
+  const profile = useProfile()
+  const navigate = useNavigate()
     const form = useRef()
     const refLogin = useRef()
     const [showDrop, setDropdown] = useState(false)
+    const [profileUser, setProfile] = useState(null)
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShowModal = () => setShow(true);
@@ -38,18 +39,22 @@ function NavScrollExample() {
     const { cart } = state
     let productsFromLocal
     const [sideCartCount, setSideCartCount] = useState(0)
-  
-    useEffect(() => {
-  
+    const userEmail =  useProfile()
+
+    useEffect(() => {     
+      
+        if(userEmail.then(user=>{
+            if(user.userProfile == "Administrator"){
+              setProfile("ADMIN")
+            }
+        }))
       productsFromLocal = getProductsFromLocalStorage()
       if(productsFromLocal){  
        if (productsFromLocal.length > 0) {
-        console.log("DENTRO DEL IF",productsFromLocal.length)
         setSideCartCount(productsFromLocal.length)
-        console.log("SIDECART COUNT", sideCartCount)
        }}
   
-    }, [])
+    }, [profileUser])
   
     useEffect(() => {
        
@@ -77,7 +82,6 @@ function NavScrollExample() {
       //e.preventDefault()
       toggleSideCart()
     }
-    const userEmail = useProfile()
     if (userEmail.email != undefined) {
       userEmail.then(email => {
         setLoggedUser(email.userEmail)
@@ -152,7 +156,7 @@ function NavScrollExample() {
   
    
 
-
+if(profileUser != "ADMIN"){
   return (
     
     <div className='fixed top-0 w-full z-50 shadow-md'>
@@ -168,23 +172,30 @@ function NavScrollExample() {
           >     <LinkContainer to="/" className="block md:px-3">
                      <Nav.Link>Home</Nav.Link>
                </LinkContainer>   
-               <LinkContainer to="/shop" className="block md:px-3 ">  
+               <div className="block md:px-3 ">  
             <NavDropdown title="Shop" id="navbarScrollingDropdown" className="drop-menu-shop"
               show={showDrop}
               onMouseEnter={showDropdown} 
               onMouseLeave={hideDropdown}
             >
-              <NavDropdown.Item style={{paddingTop:"10px", paddingBottom:"10px"}} href="#action3">
+               <NavDropdown.Item style={{paddingTop:"10px",paddingLeft:"30px",paddingRight:"30px",
+                paddingBottom:"10px"}} >
                 Categoria 1
               </NavDropdown.Item>
-              <NavDropdown.Item  style={{paddingTop:"10px", paddingBottom:"10px"}} href="#action4">
+              <NavDropdown.Item style={{paddingTop:"10px", paddingBottom:"10px",
+            paddingLeft:"30px",paddingRight:"30px"}} >
                 Categoria 2
               </NavDropdown.Item>
-              <NavDropdown.Item  style={{paddingTop:"10px", paddingBottom:"10px"}} href="#action5">
+              <NavDropdown.Item  style={{paddingTop:"10px", paddingBottom:"10px",
+            paddingLeft:"30px",paddingRight:"30px"}} >
                 Categoria 3
               </NavDropdown.Item>
+              <NavDropdown.Item  style={{paddingTop:"10px", paddingBottom:"10px",
+              paddingLeft:"30px",paddingRight:"30px"}}>
+                View All Products
+              </NavDropdown.Item>
             </NavDropdown>
-            </LinkContainer>   
+            </div>   
             <LinkContainer to="/about" className="block md:px-3">  
                      <Nav.Link >About</Nav.Link>
                      </LinkContainer>   
@@ -505,8 +516,16 @@ function NavScrollExample() {
           {toggle &&
             <SideCart />
           }
+          
     </div>
   );
 }
-
+else{
+  return (
+    <div>
+      <div>ES ADMIN</div>
+    </div>
+  )
+}
+}
 export default NavScrollExample;

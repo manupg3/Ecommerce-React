@@ -39,7 +39,7 @@ function SideCart() {
 
   return (
     <div >
-      <aside class="product-detail shadow-lg z-50" >
+      <div class="product-detail shadow-lg z-50" >
         <div class="title-container">
           <p class="title">My order</p>
           <div className='close-sidebar'>
@@ -83,7 +83,7 @@ function SideCart() {
             </h1>
           </div>
         }
-      </aside>
+      </div>
     </div>
   )
 }
