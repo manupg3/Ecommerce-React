@@ -10,7 +10,7 @@ const Layout = ({ children }) => {
   return (
     <div className="Main">
       <Navbar />
-      <div style={{paddingTop:"60px"}}>
+      <div >
       {children}
       </div>
       <Footer />

@@ -20,6 +20,7 @@ import SearchBar from './SearchBar';
 import Modal from 'react-bootstrap/Modal';
 import { LinkContainer } from 'react-router-bootstrap'
 import { useNavigate } from 'react-router-dom';
+import { NavBarAdmin } from '../admin/adminComponentes/NavBarAdmin';
 
 
 
@@ -29,14 +30,14 @@ function NavScrollExample() {
     const form = useRef()
     const refLogin = useRef()
     const [showDrop, setDropdown] = useState(false)
-    const [profileUser, setProfile] = useState(null)
+    const [profileUser, setProfileUser] = useState(null)
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShowModal = () => setShow(true);
    // const [LoggedUser, setLoggedUser] = useState(null)
     const [toggleSideCartState, setToggleSideCart] = useState(false)
     const { state, toggleSideCart, toggle, getProductsFromLocalStorage,SignIn,
-      profile ,LoggedUser } = useContext(AppContext)
+      profile ,LoggedUser,setearProfile } = useContext(AppContext)
     const { cart } = state
     let productsFromLocal
     const [sideCartCount, setSideCartCount] = useState(0)
@@ -46,7 +47,7 @@ function NavScrollExample() {
       
         if(userEmail.then(user=>{
             if(user.userProfile == "Administrator"){
-              setProfile("ADMIN")
+              setProfileUser("ADMIN")
             }
         }))
       productsFromLocal = getProductsFromLocalStorage()
@@ -105,10 +106,9 @@ function NavScrollExample() {
       }
     }
     useEffect(() => {
-      console.log("ENTRO A USEEFFECT LOGGEDUSER",profile)
-      if(Profile == "Administratotr"){
-        console.log("ES ADMINISTRATOR")
-      } 
+     const userProf = setearProfile()
+      console.log("userProf",userProf)
+      setProfileUser(userProf)
       isLggedIn()
     }, [LoggedUser])
   
@@ -529,7 +529,9 @@ if(profileUser != "ADMIN"){
 else{
   return (
     <div>
-      <div>ES ADMIN</div>
+      <div>
+      <NavBarAdmin />
+      </div>
     </div>
   )
 }

@@ -10,9 +10,10 @@ const LoginAdmin = () => {
   const form = useRef()
   const refLogin = useRef()
   //const [LoggedUser, setLoggedUser] = useState(null)
-  const profile = useProfile()
+  const profileUser = useProfile()
   const navigate = useNavigate()
-  const { state, toggleSideCart, toggle, getProductsFromLocalStorage,SignIn,LoggedUser } = useContext(AppContext)
+  const { state, toggleSideCart, toggle, getProductsFromLocalStorage,SignIn,
+    LoggedUser,setearProfile } = useContext(AppContext)
 
 
   const handleSignIn = async (e) => {
@@ -25,6 +26,10 @@ const LoginAdmin = () => {
     const result = await SignIn(data)
     console.log("IS SIGN IN",result)
        if(result == "Administrator"){
+        console.log("ES ADMINNNNNNNNN")
+
+       const res = setearProfile(result)
+       console.log("RES",res)
         navigate("/admin-home")
        }
     // const result = await signInWithEmail(data)

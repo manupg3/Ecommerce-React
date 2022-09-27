@@ -47,20 +47,22 @@ const useInitialState = () => {
            let userProfile = await supabaseClient
             .from('profiles')
             .select('profile')
-            .eq("id", result.data.user.id);
-            if(userProfile.data[0].profile == "Administrator"){
+            .eq("id", result.data.user.id)
 
-                    setLoggedUser(result.data.user.email)
-                    setProfile(userProfile.data[0].profile)
-                    console.log("PROFILE EN USINITIAL STATE",profile)
-                    return userProfile.data[0].profile
-                  
+            if(userProfile.data[0].profile == "Administrator"){
+                console.log("ENTRO AQUI")
+                    return userProfile.data[0].profile                  
              }
              else{
                 console.log("ES CLIENTE")
-                setProfile(userProfile.data[0].profile)
                 return userProfile.data[0].profile
-             }         
+             } 
+      }
+      const setearProfile = (profileUser) =>{ 
+        console.log("PROFILE USER ES:",profileUser)      
+        setProfile("ADMIN")
+        console.log("ES ADMIN?",profile)
+        return profile
       }
 
      const addToCart = (payload) => {
@@ -192,6 +194,7 @@ const useInitialState = () => {
         toggleSideCart,
         addToBuyer,
         insertOrder,
+        setearProfile,
         handleMinus,
         applied,
         Plus,
@@ -201,7 +204,7 @@ const useInitialState = () => {
         applyCouponDiscount,
         SignIn,
         LoggedUser,
-        profile
+        profile,
 
     }
 }
